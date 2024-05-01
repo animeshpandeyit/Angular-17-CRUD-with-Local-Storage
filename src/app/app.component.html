@@ -4,9 +4,50 @@
       <h4>Student Portal</h4>
     </div>
     <div class="col-6 text-end">
-      <button class="btn btn-outline-success">Add New</button>
+      <button class="btn btn-outline-success" (click)="openModel()">
+        Add New
+      </button>
     </div>
   </div>
+  @if (studentList.length !== 0) {
+  <div class="row pt-3">
+    @for (item of studentList; track $index) {
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-md-6">{{ item.name }}</div>
+            <div class="col-md-6 text-end">{{ item.mobileNumber }}</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <p>{{ item.city }}, {{ item.state }}, {{ item.pincode }}</p>
+          <p>{{ item.address }}</p>
+        </div>
+        <div class="card-footer text-center">
+          <div class="row">
+            <div class="col-md-6">
+              <small>{{ item.email }}</small>
+            </div>
+            <div class="col-md-6 text-end">
+              <button class="btn btn-sm btn-primary m-1" (click)="onEdit(item)">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-danger m-1" (click)="onDelete(item)">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+  } @else {
+  <div class="row">
+    <div class="col-12 p-4 text-center">
+      <p>No record Found, Create New Record....</p>
+    </div>
+  </div>
+  }
 </div>
 
 <!-- <ng-container *ngIf="expression">
@@ -18,3 +59,116 @@
     <h6>No'ooooo user is not an administrator</h6>
   </ng-template>
 </ng-container> -->
+
+<!-- Button to Open the Modal -->
+<!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+  Open modal
+</button> -->
+
+<!-- The Modal -->
+<div class="modal" id="myModal" #myModal>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">Modal Heading</h4>
+        <button type="button" class="btn-close" (click)="closeModel()"></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-8">
+            <label for="">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Name"
+              [(ngModel)]="studentObj.name"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <label for="">Mobile No</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Mobile"
+              [(ngModel)]="studentObj.mobileNumber"
+            />
+          </div>
+
+          <div class="col-6">
+            <label for="">Email</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Email"
+              [(ngModel)]="studentObj.email"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-4">
+            <label for="">City</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="City"
+              [(ngModel)]="studentObj.city"
+            />
+          </div>
+          <div class="col-4">
+            <label for="">State</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="State"
+              [(ngModel)]="studentObj.state"
+            />
+          </div>
+          <div class="col-4">
+            <label for="">Pin Code</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Pin Code"
+              [(ngModel)]="studentObj.pincode"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-6">
+            <label for="">Address</label>
+            <textarea
+              rows="3"
+              class="form-control"
+              [(ngModel)]="studentObj.address"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" (click)="closeModel()">
+          Close
+        </button>
+        @if (studentObj._id == 0) {
+
+        <button type="button" class="btn btn-primary" (click)="saveStudent()">
+          Save Student
+        </button>
+        } @else {
+        <button type="button" class="btn btn-success" (click)="updateStud()">
+          Update Student
+        </button>
+        }
+      </div>
+    </div>
+  </div>
+</div>
